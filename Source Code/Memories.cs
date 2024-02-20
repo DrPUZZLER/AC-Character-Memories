@@ -9,7 +9,6 @@ using UnityEngine;
 public class Memories : ScriptableObject
 {
     public List<Memory> memory = new List<Memory>();
-    
     public void CreateNewMemory()
     {
         Memory newMemory = new Memory();
@@ -25,7 +24,9 @@ public class Memories : ScriptableObject
         newMemory.memoryName = "New Memory " + (newMemoryIndex + 1).ToString();
 
         memory.Add(newMemory);
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
 
 /*

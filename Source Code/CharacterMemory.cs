@@ -8,13 +8,13 @@ using System;
 [RequireComponent(typeof(AC.NPC))]
 public class CharacterMemory : MonoBehaviour {
 
-    [SerializeField] string newMemoryPath = "Assets";
+    [SerializeField] string newMemoryPath = "Assets/The-Source/Memories";
     [SerializeField] string newAssetName = "/MemoryData";
     public Memories memories;
     
     [HideInInspector]
     public List<Vector2Int> hasRemembered; // (index, value)
-
+#if UNITY_EDITOR
     public void CreateNewMemoryAsset() {
         if (memories == null) {
             Memories newMemory = ScriptableObject.CreateInstance<Memories>();
@@ -34,6 +34,7 @@ public class CharacterMemory : MonoBehaviour {
             }
         }  
     }
+
     private string GetUniqueAssetPath(string assetPath, string baseName) {
         int counter = 0;
         string newName = baseName;
@@ -47,6 +48,7 @@ public class CharacterMemory : MonoBehaviour {
 
         return $"{assetPath}{newName}.asset";
     }
+    #endif
     void Start() {
         foreach(Memory e in memories.memory) {
             hasRemembered.Add(new Vector2Int(e.memoryIndex, Convert.ToInt32(e.memoryPreset)));
